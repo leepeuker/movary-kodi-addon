@@ -5,7 +5,7 @@
   <br>
 </h1>
 
-<h4 align="center">The official Movary Kodi Addon for automatic logging of movie plays</h4>
+<h4 align="center">The official Movary Kodi Addon for automatic movie plays logging</h4>
 
 <p align="center">
 <a href="https://github.com/leepeuker/movary-kodi-addon" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/github/stars/leepeuker/movary-kodi-addon?style=flat&color=yellow&label=github%20stars" ></a>
