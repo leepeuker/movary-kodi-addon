@@ -15,9 +15,7 @@
 </p>
 
 [Movary](https://github.com/leepeuker/movary) is a free and open source web application to track, rate and explore your movie watch history.
-This is a Kodi addon to automatically log your finished movie plays in Kodi to your Movary server. 
-
-**Disclaimer:** This project is still in an experimental (but usable) state.
+This is a Kodi addon to automatically log your finished movie plays in Kodi to your Movary server.
 
 ## Documentation
 
