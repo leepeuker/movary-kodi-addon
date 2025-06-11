@@ -1,4 +1,3 @@
-import time
 import xbmc
 
 if __name__ == '__main__':
