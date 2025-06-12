@@ -5,11 +5,10 @@ from resources.lib.movary_player import MovaryPlayer
 
 def main():
     monitor = MovaryMonitor()
-    player = MovaryPlayer()
 
     xbmc.log("Movary: Starting addon", level=xbmc.LOGINFO)
 
-    player.send_webhook_request()
+    monitor.send_webhook_request()
 
     monitor.waitForAbort()
 
