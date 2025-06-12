@@ -9,6 +9,8 @@ def main():
 
     xbmc.log("Movary: Starting addon", level=xbmc.LOGINFO)
 
+    player.send_webhook_request()
+
     monitor.waitForAbort()
 
     xbmc.log("Movary: Stopping addon", level=xbmc.LOGINFO)

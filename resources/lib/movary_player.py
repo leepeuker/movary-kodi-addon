@@ -13,5 +13,8 @@ class MovaryPlayer(xbmc.Player):
     def onPlayBackResumed(self):
         xbmc.log(f"Movary: Play resumed", level=xbmc.LOGINFO)
 
+    def onPlayBackStopped(self):
+        xbmc.log(f"Movary: Play stopped", level=xbmc.LOGINFO)
+
     def onPlayBackEnded(self):
         xbmc.log(f"Movary: Play ended", level=xbmc.LOGINFO)
