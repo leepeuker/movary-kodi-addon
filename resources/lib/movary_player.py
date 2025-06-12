@@ -70,7 +70,7 @@ class MovaryPlayer(xbmc.Player):
 
         xbmc.log(f"Movary: Detected playing movie: {self.current_movie}", level=xbmc.LOGINFO)
 
-    def sendWebhookRequest(self, tmdb_id):
+    def sendWebhookRequest(self):
         if not self.current_movie.tmdb_id:
             xbmc.log(f"Movary: Did not send played movie webhook. Movie has no tmdb id: {self.current_movie}", level=xbmc.LOGINFO)
             return
