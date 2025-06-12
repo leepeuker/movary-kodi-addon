@@ -64,7 +64,6 @@ class MovaryPlayer(xbmc.Player):
 
         self.current_movie = {
             "title": tag.getTitle(),
-            "year": tag.getYear(),
             "tmdb_id": tmdb_id if tmdb_id else None,
         }
 
@@ -91,7 +90,7 @@ class MovaryPlayer(xbmc.Player):
             return
 
         try:
-            xbmc.log(f"Movary: Sending played movie webhook request with payload: {payload}", level=xbmc.LOGINFO)
+            xbmc.log(f"Movary: Sending played movie webhook request to [{self.webhook_url}] with payload: {payload}", level=xbmc.LOGINFO)
 
             request = urllib.request.Request(
                 url=self.webhook_url,
