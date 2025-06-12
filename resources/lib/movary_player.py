@@ -14,7 +14,7 @@ class MovaryPlayer(xbmc.Player):
     def load_settings(self):
         self.webhook_url = xbmcaddon.Addon().getSetting("movary.webhook.url")
         self.is_enabled = xbmcaddon.Addon().getSetting("movary.is_enabled")
-        xbmc.log(f"Movary: Reloaded webhook url '{self.webhook_url}'", level=xbmc.LOGINFO)
+        xbmc.log(f"Movary: Reloaded addon settings", level=xbmc.LOGINFO)
 
     def onAVStarted(self):
         if not self.is_enabled:
@@ -41,7 +41,6 @@ class MovaryPlayer(xbmc.Player):
     def onPlayBackEnded(self):
         if not self.is_enabled:
             return
-
         xbmc.log(f"Movary: Play ended", level=xbmc.LOGINFO)
 
     def send_webhook_request(self, tmdb_id):
