@@ -35,13 +35,28 @@ class MovaryPlayer(xbmc.Player):
     def onPlayBackStopped(self):
         if not self.is_enabled or not self.current_movie:
             return
-        xbmc.log(f"Movary: Play stopped", level=xbmc.LOGINFO)
-        self.sendWebhookRequest()
+
+        played_time = self.getTime()
+        total_time = self.getTotalTime()
+
+        if total_time == 0:
+            xbmc.log("Movary: Play stopped but could not determine movie duration, skipping webhook.", level=xbmc.LOGWARNING)
+            return
+
+        watched_percentage = (played_time / total_time) * 100
+
+        xbmc.log(f"Movary: Play stopped at {watched_percentage:.2f}% of movie", level=xbmc.LOGINFO)
+
+        if watched_percentage >= 90:
+            self.sendWebhookRequest()
+        else:
+            xbmc.log("Movary: Play stopped at less than 90%, not sending webhook.", level=xbmc.LOGINFO)
 
     def onPlayBackEnded(self):
         if not self.is_enabled or not self.current_movie:
             return
         xbmc.log(f"Movary: Play ended", level=xbmc.LOGINFO)
+        self.sendWebhookRequest()
 
     def getCurrentMovieInfo(self):
         if not self.isPlayingVideo():
@@ -64,7 +79,7 @@ class MovaryPlayer(xbmc.Player):
 
         self.current_movie = {
             "title": tag.getTitle(),
-            "tmdb_id": tmdb_id if tmdb_id else None,
+            "tmdb_id": tmdb_id or None,
         }
 
         xbmc.log(f"Movary: Detected playing movie: {self.current_movie}", level=xbmc.LOGINFO)
