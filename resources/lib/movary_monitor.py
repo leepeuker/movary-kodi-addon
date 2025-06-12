@@ -1,6 +1,6 @@
 import xbmc
 
-from resources.lib.player_monitor import PlayerMonitor
+from resources.lib.movary_monitor import MovaryMonitor
 
 class MovaryMonitor(xbmc.Monitor):
     def __init__(self):
