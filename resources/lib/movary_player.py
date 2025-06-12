@@ -17,20 +17,31 @@ class MovaryPlayer(xbmc.Player):
         xbmc.log(f"Movary: Reloaded webhook url '{self.webhook_url}'", level=xbmc.LOGINFO)
 
     def onAVStarted(self):
+        if not self.is_enabled:
+            return
         xbmc.log(f"Movary: Play started", level=xbmc.LOGINFO)
 
     def onPlayBackPaused(self):
+        if not self.is_enabled:
+            return
         xbmc.log(f"Movary: Play paused", level=xbmc.LOGINFO)
 
     def onPlayBackResumed(self):
+        if not self.is_enabled:
+            return
         xbmc.log(f"Movary: Play resumed", level=xbmc.LOGINFO)
 
     def onPlayBackStopped(self):
+        if not self.is_enabled:
+            return
         xbmc.log(f"Movary: Play stopped", level=xbmc.LOGINFO)
         # TODO: get the tmdbId of the current item
         # self.send_webhook_request(tmdbId)
 
     def onPlayBackEnded(self):
+        if not self.is_enabled:
+            return
+
         xbmc.log(f"Movary: Play ended", level=xbmc.LOGINFO)
 
     def send_webhook_request(self, tmdb_id):

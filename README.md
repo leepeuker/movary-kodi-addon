@@ -21,7 +21,7 @@ This is a Kodi addon to automatically log your finished movie plays in Kodi to y
 
 ### Requirements
 
-- **Webhook URL**: A Kodi Webhook URL from Movary (generated in user integration settings)
+- **Webhook URL**: A Kodi Webhook URL from Movary (generated in the Movary user settings)
 
 ### How to install
 
