@@ -3,7 +3,7 @@ import xbmc
 from resources.lib.movary_monitor import MovaryMonitor
 
 def main():
-    monitor = MainMonitor()
+    monitor = MovaryMonitor()
 
     xbmc.log("Movary: Starting addon", level=xbmc.LOGINFO)
 

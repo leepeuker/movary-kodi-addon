@@ -1,7 +1,7 @@
 import xbmc
 import xbmcaddon
 
-class MainMonitor(xbmc.Monitor):
+class MovaryMonitor(xbmc.Monitor):
     def __init__(self):
         super().__init__()
 
