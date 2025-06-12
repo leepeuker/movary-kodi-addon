@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <category label="General">
+        <setting label="Webhook enabled" type="bool" id="movary.is_enabled" default="false"/>
         <setting label="Webhook URL" type="text" id="movary.webhook.url" default=""/>
     </category>
 </settings>

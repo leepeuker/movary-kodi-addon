@@ -10,6 +10,3 @@ class MovaryMonitor(xbmc.Monitor):
 
     def onSettingsChanged(self):
         self.movary_player.load_settings()
-
-    def send_webhook_request(self):
-        self.movary_player.send_webhook_request()
