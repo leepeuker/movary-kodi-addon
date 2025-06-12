@@ -20,7 +20,7 @@ class MovaryPlayer(xbmc.Player):
         if not self.is_enabled:
             return
         xbmc.log(f"Movary: Play started", level=xbmc.LOGINFO)
-        self.current_movie = self.getCurrentMovieInfo()
+        self.getCurrentMovieInfo()
 
     def onPlayBackPaused(self):
         if not self.is_enabled or not self.current_movie:
@@ -36,8 +36,7 @@ class MovaryPlayer(xbmc.Player):
         if not self.is_enabled or not self.current_movie:
             return
         xbmc.log(f"Movary: Play stopped", level=xbmc.LOGINFO)
-        # TODO: get the tmdbId of the current item
-        # self.sendWebhookRequest(tmdbId)
+        self.sendWebhookRequest()
 
     def onPlayBackEnded(self):
         if not self.is_enabled or not self.current_movie:
@@ -47,35 +46,38 @@ class MovaryPlayer(xbmc.Player):
     def getCurrentMovieInfo(self):
         if not self.isPlayingVideo():
             xbmc.log(f"Movary: Play ignored: play is no movie", level=xbmc.LOGINFO)
-            return None
+            self.current_movie = None
+            return
 
         tag = self.getVideoInfoTag()
         if not tag:
             xbmc.log(f"Movary: Play ignored: no video info tag", level=xbmc.LOGINFO)
-            return None
+            self.current_movie = None
+            return
 
         if tag.getMediaType() != "movie":
             xbmc.log(f"Movary: Play ignored: play is no movie", level=xbmc.LOGINFO)
-            return None
+            self.current_movie = None
+            return
 
-        # Use InfoLabels as fallback for unique IDs
         tmdb_id = xbmc.getInfoLabel("VideoPlayer.UniqueID(tmdb)")
-        imdb_id = xbmc.getInfoLabel("VideoPlayer.IMDBNumber")
 
-        self.movie_info = {
+        self.current_movie = {
             "title": tag.getTitle(),
             "year": tag.getYear(),
             "tmdb_id": tmdb_id if tmdb_id else None,
         }
 
-        xbmc.log(f"Movary: Detected movie info: {self.movie_info}", level=xbmc.LOGINFO)
-
-        return self.movie_info
+        xbmc.log(f"Movary: Detected playing movie: {self.current_movie}", level=xbmc.LOGINFO)
 
     def sendWebhookRequest(self, tmdb_id):
+        if not self.current_movie.tmdb_id:
+            xbmc.log(f"Movary: Did not send played movie webhook. Movie has no tmdb id: {self.current_movie}", level=xbmc.LOGINFO)
+            return
+
         payload = {
             "uniqueIds": {
-                "tmdbId" : tmdb_id
+                "tmdbId" : self.current_movie.tmdb_id
             },
         }
         headers = {'Content-Type': 'application/json'}
@@ -89,6 +91,8 @@ class MovaryPlayer(xbmc.Player):
             return
 
         try:
+            xbmc.log(f"Movary: Sending played movie webhook request with payload: {payload}", level=xbmc.LOGINFO)
+
             request = urllib.request.Request(
                 url=self.webhook_url,
                 data=json.dumps(payload).encode("utf-8"),
