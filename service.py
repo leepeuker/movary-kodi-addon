@@ -1,7 +1,6 @@
 import xbmc
 
 from resources.lib.movary_monitor import MovaryMonitor
-from resources.lib.movary_player import MovaryPlayer
 
 def main():
     monitor = MovaryMonitor()

@@ -1,7 +1,6 @@
 import xbmc
-import xbmcaddon
-import urllib.request
-import json
+
+from resources.lib.player_monitor import PlayerMonitor
 
 class MovaryMonitor(xbmc.Monitor):
     def __init__(self):
