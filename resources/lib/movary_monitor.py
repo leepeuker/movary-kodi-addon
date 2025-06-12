@@ -12,6 +12,6 @@ class MovaryMonitor(xbmc.Monitor):
         self.load_settings()
 
     def load_settings(self):
-        self.settings = addon.getSettings()
+        self.settings = self.addon.getSettings()
 
         xbmc.log("Movary: Loaded webhook url '" + self.settings.getString("movary.webhook.url") + "'", level=xbmc.LOGINFO)
