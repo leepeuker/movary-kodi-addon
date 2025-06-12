@@ -75,6 +75,7 @@ class MovaryPlayer(xbmc.Player):
             return
 
         payload = {
+            "title": tag.getTitle(),
             "uniqueIds": {
                 "tmdbId" : self.current_movie.get("tmdb_id")
             },
