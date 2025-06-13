@@ -22,8 +22,8 @@ class MovaryPlayer(xbmc.Player):
         self.is_enabled = xbmcaddon.Addon().getSetting("movary.is_enabled") == "true"
         xbmc.log(f"Movary: Reloaded addon settings", level=xbmc.LOGINFO)
 
-    def show_message(self, message: str):
-        jsonrpc_request("GUI.ShowNotification", {"title": "Movary", "message": message})
+    def show_message(title: str, message: str, duration: int = 5000, icon: str = "info"):
+        xbmc.executebuiltin(f'Notification("{title}", "{message}", {duration}, "{icon}")')
 
     def startWatchTimer(self):
         self.watch_timer_active = True
