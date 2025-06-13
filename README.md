@@ -49,8 +49,7 @@ The play must have either ended or been manually stopped:
   - at least 90% of the movie runtime has to be over
   - and the play must have been running for at least 10s
 
-
-### Development
+## Development
 
 Create an installable addon zip locally from the currently checked-out commit:
 ```
