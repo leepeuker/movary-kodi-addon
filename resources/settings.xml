@@ -4,4 +4,8 @@
         <setting label="Webhook enabled" type="bool" id="movary.is_enabled" default="false"/>
         <setting label="Webhook URL" type="text" id="movary.webhook.url" default=""/>
     </category>
+    <category label="Optional">
+        <setting label="Basic auth user" type="text" id="movary.basic.auth.user" default=""/>
+        <setting label="Basic auth password" type="text" id="movary.basic.auth.password" default=""/>
+    </category>
 </settings>

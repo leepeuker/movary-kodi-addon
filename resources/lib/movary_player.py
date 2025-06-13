@@ -5,6 +5,7 @@ import xbmcvfs
 import urllib.request
 import json
 import threading
+import base64
 
 class MovaryPlayer(xbmc.Player):
     def __init__(self, *args):
@@ -12,6 +13,8 @@ class MovaryPlayer(xbmc.Player):
         self.current_movie = None
         self.webhook_url = None
         self.is_enabled = None
+        self.auth_user = None
+        self.auth_password = None
         self.load_settings()
         self.watch_timer = None
         self.watch_timer_active = False
@@ -21,6 +24,8 @@ class MovaryPlayer(xbmc.Player):
     def load_settings(self):
         self.webhook_url = xbmcaddon.Addon().getSetting("movary.webhook.url")
         self.is_enabled = xbmcaddon.Addon().getSetting("movary.is_enabled") == "true"
+        self.auth_user = xbmcaddon.Addon().getSetting("movary.basic.auth.user")
+        self.auth_password = xbmcaddon.Addon().getSetting("movary.basic.auth.password")
         xbmc.log(f"Movary: Reloaded addon settings", level=xbmc.LOGINFO)
 
     def show_message(self, message: str, duration: int = 5000):
@@ -159,6 +164,11 @@ class MovaryPlayer(xbmc.Player):
             },
         }
         headers = {'Content-Type': 'application/json'}
+
+        if self.auth_user and self.auth_password:
+            credentials = f"{self.auth_user}:{self.auth_password}"
+            encoded_credentials = base64.b64encode(credentials.encode('utf-8')).decode('utf-8')
+            headers["Authorization"] = f"Basic {encoded_credentials}"
 
         if not self.webhook_url:
             xbmc.log(f"Movary: Did not send played movie webhook. Webhook URL not set.", level=xbmc.LOGERROR)
