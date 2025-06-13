@@ -28,7 +28,7 @@ This is a Kodi addon to automatically log your finished movie plays in Kodi to y
 Download the addon:
 
 - Option 1: Download the "Source code (zip)" of a [release](https://github.com/leepeuker/movary-kodi-addon/releases/tag)
-- Option 2: Download the repository as a zip
+- Option 2: Download the repository as a zip ([how to](https://docs.github.com/en/repositories/working-with-files/using-files/downloading-source-code-archives#downloading-source-code-archives-from-the-repository-view))
 
 Than go into Kodi to "Settings -> Add-ons -> Install from zip file" and select the downloaded zip file to install it.
 
