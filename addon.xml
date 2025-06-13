@@ -13,7 +13,6 @@
             <screenshot>resources/screenshot-movary-dashboard.png</screenshot>
             <screenshot>resources/screenshot-movary-settings.png</screenshot>
         </assets>
-        <disclaimer lang="en_GB">This addon is under active development!</disclaimer>
         <source>https://github.com/leepeuker/movary-kodi-addon</source>
         <license>MIT</license>
     </extension>
