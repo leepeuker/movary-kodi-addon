@@ -32,7 +32,23 @@ Download the addon:
 
 Than go into Kodi to "Settings -> Add-ons -> Install from zip file" and select the downloaded zip file to install it.
 
-Afterwards go to "Settings -> My add-ons -> Services -> Movary -> Configure" and make sure to enter your Movary webhook url and to enable the webhook. 
+Afterwards go to "Settings -> My add-ons -> Services -> Movary -> Configure" and make sure to enter your Movary webhook url and to enable the webhook.
+
+### When is a Kodi play logged to Movary?
+
+There are multiple requirements for a video play in Kodi to trigger a Movary webhook request to log a movie play.
+
+The played video must be:
+- a movie
+- have a tmdb id
+
+The play must have either ended or been manually stopped:
+- ended
+  - always triggers a webhook request 
+- stopped
+  - at least 90% of the movie runtime has to be over
+  - and the play must have been running for at least 10s
+
 
 ### Development
 
