@@ -1,9 +1,10 @@
 import xbmc
 import xbmcaddon
+import xbmcgui
+import xbmcvfs
 import urllib.request
 import json
 import threading
-from resources.lib.utils import jsonrpc_request
 
 class MovaryPlayer(xbmc.Player):
     def __init__(self, *args):
@@ -22,8 +23,11 @@ class MovaryPlayer(xbmc.Player):
         self.is_enabled = xbmcaddon.Addon().getSetting("movary.is_enabled") == "true"
         xbmc.log(f"Movary: Reloaded addon settings", level=xbmc.LOGINFO)
 
-    def show_message(title: str, message: str, duration: int = 5000, icon: str = "info"):
-        xbmc.executebuiltin(f'Notification("{title}", "{message}", {duration}, "{icon}")')
+    def show_message(self, message: str, duration: int = 5000):
+        addon = xbmcaddon.Addon()
+        icon_path = xbmcvfs.translatePath(addon.getAddonInfo("path") + "/resources/icon.png")
+        dialog = xbmcgui.Dialog()
+        dialog.notification("Movary", message, icon=icon_path, time=duration)
 
     def startWatchTimer(self):
         self.watch_timer_active = True
@@ -144,7 +148,7 @@ class MovaryPlayer(xbmc.Player):
 
         if not self.current_movie.get("tmdb_id"):
             xbmc.log(f"Movary: Did not send played movie webhook. Movie has no tmdb id: {self.current_movie}", level=xbmc.LOGINFO)
-            show_message("Error: Play not logged, no tmdb id found")
+            self.show_message("Info: Play not logged")
 
             return
 
@@ -158,7 +162,7 @@ class MovaryPlayer(xbmc.Player):
 
         if not self.webhook_url:
             xbmc.log(f"Movary: Did not send played movie webhook. Webhook URL not set.", level=xbmc.LOGERROR)
-            show_message("Error: Play not logged, webhook url missing")
+            self.show_message("Error: Play not logged")
 
             return
 
@@ -173,7 +177,7 @@ class MovaryPlayer(xbmc.Player):
             with urllib.request.urlopen(request) as response:
                 xbmc.log(f"Movary: Played movie webhook request sent. Response code: {response.status}", level=xbmc.LOGDEBUG)
 
-                show_message("Play was logged")
+                self.show_message("Play was logged")
         except Exception as e:
             xbmc.log(f"Movary: Played movie webhook request failed to sent: {e}", level=xbmc.LOGERROR)
-            show_message("Play not logged, webhook request failed")
+            self.show_message("Error: Play not logged")
