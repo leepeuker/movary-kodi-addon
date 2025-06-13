@@ -29,7 +29,7 @@ class MovaryPlayer(xbmc.Player):
                 if not self.watch_timer_paused:
                     try:
                         self.current_runtime_position = self.getTime()
-                        xbmc.log("Movary: Watch timer updated current runtime positon", level=xbmc.LOGDEBUG)
+                        xbmc.log("Movary: Watch timer updated current runtime positon", level=xbmc.LOGINFO)
                     except Exception:
                         xbmc.log("Movary: Failed to get time", level=xbmc.LOGWARNING)
                 xbmc.sleep(10000)  # 10 seconds
@@ -43,33 +43,33 @@ class MovaryPlayer(xbmc.Player):
         if self.watch_timer is not None:
             self.watch_timer.join(timeout=1)
             self.watch_timer = None
-        xbmc.log("Movary: Watch timer stopped", level=xbmc.LOGDEBUG)
+        xbmc.log("Movary: Watch timer stopped", level=xbmc.LOGINFO)
 
     def pauseWatchTimer(self):
         self.watch_timer_paused = True
-        xbmc.log("Movary: Watch timer paused", level=xbmc.LOGDEBUG)
+        xbmc.log("Movary: Watch timer paused", level=xbmc.LOGINFO)
     
     def resumeWatchTimer(self):
         self.watch_timer_paused = False
-        xbmc.log("Movary: Watch timer resumed", level=xbmc.LOGDEBUG)
+        xbmc.log("Movary: Watch timer resumed", level=xbmc.LOGINFO)
 
     def onAVStarted(self):
         if not self.is_enabled:
             return
-        xbmc.log(f"Movary: Play started", level=xbmc.LOGDEBUG)
+        xbmc.log(f"Movary: Play started", level=xbmc.LOGINFO)
         self.getCurrentMovieInfo()
         self.startWatchTimer()
 
     def onPlayBackPaused(self):
         if not self.is_enabled or not self.current_movie:
             return
-        xbmc.log(f"Movary: Play paused", level=xbmc.LOGDEBUG)
+        xbmc.log(f"Movary: Play paused", level=xbmc.LOGINFO)
         self.pauseWatchTimer()
 
     def onPlayBackResumed(self):
         if not self.is_enabled or not self.current_movie:
             return
-        xbmc.log(f"Movary: Play resumed", level=xbmc.LOGDEBUG)
+        xbmc.log(f"Movary: Play resumed", level=xbmc.LOGINFO)
         self.resumeWatchTimer()
 
     def onPlayBackStopped(self):
@@ -101,25 +101,25 @@ class MovaryPlayer(xbmc.Player):
     def onPlayBackEnded(self):
         if not self.is_enabled or not self.current_movie:
             return
-        xbmc.log(f"Movary: Play ended", level=xbmc.LOGDEBUG)
+        xbmc.log(f"Movary: Play ended", level=xbmc.LOGINFO)
         self.stopWatchTimer()
         self.sendWebhookRequest()
         self.current_movie = None
 
     def getCurrentMovieInfo(self):
         if not self.isPlayingVideo():
-            xbmc.log(f"Movary: Play ignored: play is no movie", level=xbmc.LOGDEBUG)
+            xbmc.log(f"Movary: Play ignored: play is no movie", level=xbmc.LOGINFO)
             self.current_movie = None
             return
 
         tag = self.getVideoInfoTag()
         if not tag:
-            xbmc.log(f"Movary: Play ignored: no video info tag", level=xbmc.LOGDEBUG)
+            xbmc.log(f"Movary: Play ignored: no video info tag", level=xbmc.LOGINFO)
             self.current_movie = None
             return
 
         if tag.getMediaType() != "movie":
-            xbmc.log(f"Movary: Play ignored: play is no movie", level=xbmc.LOGDEBUG)
+            xbmc.log(f"Movary: Play ignored: play is no movie", level=xbmc.LOGINFO)
             self.current_movie = None
             return
 
@@ -147,7 +147,7 @@ class MovaryPlayer(xbmc.Player):
         headers = {'Content-Type': 'application/json'}
 
         if not self.is_enabled:
-            xbmc.log(f"Movary: Did not send played movie webhook. Addon not enabled.", level=xbmc.LOGDEBUG)
+            xbmc.log(f"Movary: Did not send played movie webhook. Addon not enabled.", level=xbmc.LOGINFO)
             return
 
         if not self.webhook_url:
@@ -163,6 +163,6 @@ class MovaryPlayer(xbmc.Player):
                 headers=headers
             )
             with urllib.request.urlopen(request) as response:
-                xbmc.log(f"Movary: Played movie webhook request sent. Response code: {response.status}", level=xbmc.LOGDEBUG)
+                xbmc.log(f"Movary: Played movie webhook request sent. Response code: {response.status}", level=xbmc.LOGINFO)
         except Exception as e:
             xbmc.log(f"Movary: Played movie webhook request failed to sent: {e}", level=xbmc.LOGERROR)
